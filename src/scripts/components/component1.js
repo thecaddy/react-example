@@ -10,8 +10,6 @@
 var React = require('react/addons');
 var request = require('superagent');
 
-require('../../styles/reset.css');
-require('../../styles/main.css');
 
 // PropertyList:
 // Fetch data in componentDidMount. When the response
@@ -57,24 +55,35 @@ var PropertyList = React.createClass({
   },
 
   getInitialState: function () {
-    return { properties:[] };
+    return { properties:[], isLoading: false };
   },
 
   componentDidMount: function () {
     var uri = this.props.source;
+    this.setState({ isLoading: true });
 
     this.getResults(uri, function (results) {
-      this.setState({ properties: results.Results });
+      this.setState({
+          properties: results.Results,
+          isLoading: false
+      });
     }.bind(this));
 
   },
 
   render: function() {
 
-    var propertyList =
-    this.state.properties.map(function (propertyItem) {
-      return <PropertyItem propertyItem={propertyItem} />
-    });
+    var propertyList;
+
+    if (this.state.isLoading) {
+      propertyList = (
+        <div>Please wait... Loading results</div>
+      );
+    } else {
+      propertyList = this.state.properties.map(function (propertyItem) {
+        return <PropertyItem propertyItem={propertyItem} />
+      });
+    }
 
     return (
       <ul className="propertyList">
@@ -85,20 +94,26 @@ var PropertyList = React.createClass({
 });
 
 var PropertyItem = React.createClass({
+
+  handleClick: function(event) {
+    alert(this.props.propertyItem.PropertyID);
+  },
+
   render: function () {
     var photoSrc = this.props.propertyItem.PhotoUriBase + '0-thumb.jpg';
     return (
-      <li className="propertyItem">
+      <li className="propertyItem" onClick={this.handleClick}>
         <img src={photoSrc} />
         <span>{this.props.propertyItem.Address}</span>
       </li>
     );
   }
+
 });
 
 
 React.renderComponent(
-  <PropertyList source="http://192.168.62.210/results" />,
+  <PropertyList source="http://192.168.62.208/results" />,
   document.getElementById('content2')
 );
 

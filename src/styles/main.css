@@ -39,3 +39,18 @@ html, body {
 .fade-leave.fade-leave-active {
   opacity: 0.01;
 }
+
+.idx-results
+{
+  overflow: hidden;
+}
+#content2
+{
+  width: 400px;
+  float: left;
+}
+
+#content3
+{
+  float: right;
+}

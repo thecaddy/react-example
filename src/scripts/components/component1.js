@@ -93,6 +93,7 @@ var PropertyList = React.createClass({
           <PropertyItem
             propertyItem={propertyItem}
             index={index}
+            key={index}
             onSelected={this.handleSelected} />
           );
 

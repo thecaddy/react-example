@@ -64,7 +64,7 @@ var Map = React.createClass({
       });
 
       markers.push( marker );
-      map.setZoom(13);
+      map.setZoom(12);
       map.setCenter(location);
 
     }) );

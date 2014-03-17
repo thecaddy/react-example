@@ -54,6 +54,13 @@ var PropertyList = React.createClass({
     return body;
   },
 
+  handleSelected: function (index) {
+    if (index >= 0 && this.state.properties.length > 0) {
+      var propertyItem = this.state.properties[index];
+      this.props.onPropertySelected(propertyItem);
+    }
+  },
+
   getInitialState: function () {
     return { properties:[], isLoading: false };
   },
@@ -80,9 +87,16 @@ var PropertyList = React.createClass({
         <div>Please wait... Loading results</div>
       );
     } else {
-      propertyList = this.state.properties.map(function (propertyItem) {
-        return <PropertyItem propertyItem={propertyItem} />
-      });
+      propertyList = this.state.properties.map(function (propertyItem, index) {
+
+        return (
+          <PropertyItem
+            propertyItem={propertyItem}
+            index={index}
+            onSelected={this.handleSelected} />
+          );
+
+      }.bind(this));
     }
 
     return (
@@ -95,8 +109,9 @@ var PropertyList = React.createClass({
 
 var PropertyItem = React.createClass({
 
-  handleClick: function(event) {
-    alert(this.props.propertyItem.PropertyID);
+  handleClick: function() {
+    this.props.onSelected(this.props.index);
+    // alert(this.props.propertyItem.PropertyID);
   },
 
   render: function () {
@@ -111,10 +126,4 @@ var PropertyItem = React.createClass({
 
 });
 
-
-React.renderComponent(
-  <PropertyList source="http://192.168.62.208/results" />,
-  document.getElementById('content2')
-);
-
-// getResults();
+module.exports = PropertyList;

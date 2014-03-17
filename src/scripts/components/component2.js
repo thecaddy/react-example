@@ -64,8 +64,12 @@ var Map = React.createClass({
       });
 
       markers.push( marker );
+      map.setZoom(13);
+      map.setCenter(location);
 
     }) );
+
+
 
     this.setState( { markers : markers });
   },
@@ -112,7 +116,4 @@ var Map = React.createClass({
 
 });
 
-React.renderComponent(
-  <Map latitude={33.10488} longitude={-117.23401} zoom={6} width={400} height={400} />,
-  document.getElementById('content3')
-);
+module.exports = Map;

@@ -2,6 +2,7 @@
 
 html, body {
   background: #222222;
+  overflow:hidden;
 }
 
 h1 {
@@ -24,6 +25,8 @@ h3 {
   height: 100%;
   background: #222222;
   color: #fff;
+  position:absolute;
+  bottom:0;
 }
 
 .main img {
@@ -51,19 +54,63 @@ h3 {
 
 .fade-leave.fade-leave-active {
   opacity: 0.01;
+  right:0;
+}
+.detailSlide-enter{
+  transition: all .4s ease;
+  right:0;
+}
+.detailSlide-enter.detailSlide-enter-active{
+  right:0;
+}
+.detailSlide-exit{
+  transition: all .4s ease;
+  left: calc(100%);
+}
+.detailSlide-exit.detailSlide-exit-active{
+  left: calc(100%);
 }
 
-.idx-results
-{
-  overflow: hidden;
+.idx-results {
+  height:inherit;
+}
+#content{
+  height:inherit;
+}
+#contentHolder{
+  height:inherit;
 }
 #content2
 {
+  overflow-y: auto;
+  height: inherit;
+  position:relative;
   width: 400px;
   float: left;
 }
 
 #content3
 {
+  position:relative;
   float: right;
+  width: calc(100% - 400px);
+  height:inherit;
+}
+#details{
+  transition:all .4s linear;
+  color:black;
+  position:absolute;
+  width: calc(100% - 400px);
+  right:calc(0%);
+  height:inherit;
+  z-index:2;
+  background-color:white;
+  padding:20px;
+}
+/*#details:hover{
+  background:#f7941d;
+}*/
+
+#details.hidden{
+  right:calc(-100%);
 }

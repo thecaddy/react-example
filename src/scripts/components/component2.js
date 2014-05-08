@@ -30,10 +30,9 @@ var Map = React.createClass({
     return {
       latitude: 0,
       longitude: 0,
-      zoom: 4,
-      width: 500,
-      height: 500,
+      zoom: 8,
       points: [],
+      height: 'inherit',
       gmaps_api_key: '',
       gmaps_sensor: false
     }
@@ -64,8 +63,8 @@ var Map = React.createClass({
       });
 
       markers.push( marker );
-      map.setZoom(12);
-      map.setCenter(location);
+      //map.setZoom(12);
+      //map.setCenter(location);
 
     }) );
 
@@ -78,8 +77,8 @@ var Map = React.createClass({
 
     var style = {
       width: this.props.width,
-      height: this.props.height
-    }
+      height: 'inherit'
+    };
 
     return (
       <div style={style}></div>

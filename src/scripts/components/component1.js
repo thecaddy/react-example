@@ -8,6 +8,7 @@
 // Dependency Injection
 // This is NOT part of React
 var React = require('react/addons');
+var Cortex = require('cortexjs');
 var request = require('superagent');
 
 
@@ -54,10 +55,16 @@ var PropertyList = React.createClass({
     return body;
   },
 
-  handleSelected: function (index) {
+  handleClick: function (index) {
     if (index >= 0 && this.state.properties.length > 0) {
       var propertyItem = this.state.properties[index];
-      this.props.onPropertySelected(propertyItem);
+      this.props.onPropertyClick(propertyItem);
+    }
+  },
+  handleHover: function (index) {
+    if (index >= 0 && this.state.properties.length > 0) {
+      var propertyItem = this.state.properties[index];
+      this.props.onPropertyHovered(propertyItem);
     }
   },
 
@@ -79,9 +86,7 @@ var PropertyList = React.createClass({
   },
 
   render: function() {
-
     var propertyList;
-
     if (this.state.isLoading) {
       propertyList = (
         <div>Please wait... Loading results</div>
@@ -94,7 +99,10 @@ var PropertyList = React.createClass({
             propertyItem={propertyItem}
             index={index}
             key={index}
-            onSelected={this.handleSelected} />
+            hideDetails={this.props.hideDetails}
+            clickedProperty={this.props.clickedProperty}
+            // onSelected={this.handleClick}
+            onHovered={this.handleHover} />
           );
 
       }.bind(this));
@@ -111,14 +119,22 @@ var PropertyList = React.createClass({
 var PropertyItem = React.createClass({
 
   handleClick: function() {
-    this.props.onSelected(this.props.index);
-    // alert(this.props.propertyItem.PropertyID);
+    //console.log('we are clicking');
+
+    console.log('item: ', this.props.propertyItem);
+    this.props.clickedProperty.set(this.props.propertyItem);
+    this.props.hideDetails.set(false);
+  },
+  handleHover: function(){
+    this.props.onHovered(this.props.index);
   },
 
   render: function () {
     var photoSrc = this.props.propertyItem.PhotoUriBase + '0-thumb.jpg';
     return (
-      <li className="propertyItem" onClick={this.handleClick}>
+      <li className="propertyItem" 
+        onClick={this.handleClick}
+        onMouseEnter={this.handleHover}>
         <img src={photoSrc} />
         <span>{this.props.propertyItem.Address}</span>
       </li>
